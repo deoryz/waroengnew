@@ -65,10 +65,15 @@ class OrderController extends Controller
 						$modelHosting->save();
 
 						$dataHosting = Hosting::model()->findByPk($modelHosting->hosting_id);
+						$dataHostingPrice = HostingPrice::model()->find(
+							'hosting_id = :hosting_id AND periode = :periode', 
+							array(':hosting_id'=>$dataHosting->id, ':periode'=>$model->periode)
+						);
 
-						$model->total = $dataHosting->price;
+						$model->total = $dataHostingPrice->price;
 						$model->biller_type = 'hosting';
 						$model->biller_id = $modelHosting->id;
+						$model->keterangan = 'Sewa Hosting '.$dataHosting->paket_name.' '.$dataHostingPrice->name.' ('.$modelHosting->domain.')';
 					}else{
 						$modelDomain->attributes=$_POST['OrderDomain'];
 						$modelDomain->save();
@@ -78,13 +83,15 @@ class OrderController extends Controller
 						$model->total = $dataDomain->price;
 						$model->biller_type = 'domain';
 						$model->biller_id = $modelDomain->id;
+						$model->keterangan = 'Beli Domain '.$modelDomain->domain.' '.$model->periode;
 					}
+					$model->end_date = date('Y-m-d', strtotime($model->start_date) + strtotime('+'.$model->periode.'m'));
 					$model->update = date('Y-m-d H:i:s');
 					$model->save();
 					Log::createLog("OrderController Create $model->id");
 					Yii::app()->user->setFlash('success','Data has been inserted');
 				    $transaction->commit();
-					$this->redirect(array('update','id'=>$model->id));
+					$this->redirect(array('index'));
 				}
 				catch(Exception $ce)
 				{
@@ -92,6 +99,13 @@ class OrderController extends Controller
 				}
 			}
 		}
+
+		if ($model->start_date == '') {
+			$model->start_date = date('Y-m-d');
+		}
+
+		$modelHosting->attributes=$_POST['OrderHosting'];
+		$modelDomain->attributes=$_POST['OrderDomain'];
 
 		$this->render('create',array(
 			'model'=>$model,

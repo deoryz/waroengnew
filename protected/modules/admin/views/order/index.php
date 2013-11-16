@@ -22,7 +22,8 @@ $this->menu=array(
 		// 'status',
 		array(
 			'name'=>'status',
-			'value'=>'Order->model()->getStatus($data->status)',
+			'type'=>'raw',
+			'value'=>'Order::model()->getStatus($data->status)',
 		),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',

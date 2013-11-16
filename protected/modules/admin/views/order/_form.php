@@ -1,9 +1,9 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'order-form',
     'type'=>'horizontal',
-	'enableAjaxValidation'=>true,
+	'enableAjaxValidation'=>false,
 	'clientOptions'=>array(
-		'validateOnSubmit'=>true,
+		'validateOnSubmit'=>false,
 	),
 )); ?>
 
@@ -43,7 +43,26 @@
 
 	<?php echo $form->textFieldRow($model,'periode',array('class'=>'span2','maxlength'=>100)) ?>
 
-	<?php echo $form->textFieldRow($model,'start_date',array('class'=>'span5','maxlength'=>100)) ?>
+	<?php // echo $form->textFieldRow($model,'start_date',array('class'=>'span5','maxlength'=>100)) ?>
+	<div class="control-group">
+		<?php echo $form->labelEx($model,'start_date', array('class'=>'control-label')); ?>
+		<div class="controls">
+			<?php
+			    $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+			    'model'=>$model,
+			    'attribute'=>'start_date',
+			    // additional javascript options for the date picker plugin
+			    'options'=>array(
+			    	'showAnim'=>'fold',
+			    	'dateFormat'=>'yy-mm-dd',
+			    ),
+			    'htmlOptions'=>array(
+			    'style'=>'height:20px; width: 180px;'
+			    ),
+			    ));
+			?>
+		</div>
+	</div>
 
 	<?php echo $form->dropDownListRow($model,'status',array(
 		'1' => 'Aktif',

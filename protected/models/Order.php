@@ -39,7 +39,7 @@ class Order extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('member_id, jenis_produk, update, status, start_date, periode', 'required'),
+			array('member_id, jenis_produk, status, start_date, periode', 'required'),
 			array('biller_id, status, member_id', 'numerical', 'integerOnly'=>true),
 			array('keterangan, biller_type, jenis_produk', 'length', 'max'=>100),
 			// The following rule is used by search().
