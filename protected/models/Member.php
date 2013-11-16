@@ -41,7 +41,9 @@ class Member extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email, pass, nama, alamat, kota, no_telp, status', 'required'),
+			array('email, nama, alamat, kota, no_telp, status', 'required'),
+			array('pass', 'required', 'on'=>'insert'),
+
 			array('status', 'numerical', 'integerOnly'=>true),
 			array('email, alamat', 'length', 'max'=>200),
 			array('pass, kota', 'length', 'max'=>50),

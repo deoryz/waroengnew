@@ -1,0 +1,30 @@
+
+-Ada 2 file  :
+
+ index.php 		: Sudah jadi dan ada tampilan menarik 
+ rajasmsreguler.php	: Class sms reguler  
+
+-Syarat untuk bisa menggunakan http api adalah CURL di webserver anda harus aktif 
+
+-Anda tinggal mengganti KEY di contoh file dengan KEY milik anda yang bisa anda ambil di http://raja-sms.com
+
+Keterangan API :
+- nohp, adalah nomor hp tujuan dengan format 08xxxxxxxxx
+- pesan, adalah isi SMS yang akan dikirim (maksimal 153 Karakter)
+- key, adalah id username anda
+
+
+Keterangan Balasan :
+- 0=xxx , xxx adalah id dari pesan terkirim (Pengiriman berhasil)
+- 1=Saldo Token SMS Habis
+- 2=Masa Aktif Sudah Lewat
+- 3=Domain Tidak Terdaftar/Salah
+- 4=Key Tidak Terdaftar/Salah
+- 5=Format Http Api SMS Salah 
+
+Jika anda mengalami kesulitan 
+silahkan kontak kami: 
+
+Telp/Sms : 081 229 229 419 / 081 901 901 651 	
+Email 	 : mas.khoirulanwar@gmail.com atau mas.khoirulanwar@yahoo.co.id 
+Web      : http://raja-sms.com
