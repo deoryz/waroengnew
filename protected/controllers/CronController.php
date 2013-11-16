@@ -49,6 +49,7 @@ class CronController extends Controller
 				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , 0);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1);
 				$result = curl_exec($ch);
+				echo $result;
 				// echo curl_error($ch);
 				curl_close( $ch );
 				// echo $result;
@@ -149,5 +150,14 @@ class CronController extends Controller
 		$access_token->value = $data->access_token;
 		$access_token->save();
 		echo "Berhasil";
+	}
+	public function actionJs()
+	{
+		$this->layout = '//layouts/mainKosong';
+		
+
+		$this->render('js', array(
+			// 'model'=>$model,
+		));
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-class FbPostController extends Controller
+class FbPostController extends ControllerAdmin
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -74,13 +74,106 @@ class FbPostController extends Controller
 					if($img->name!=''){//jika di edit
 						$img->saveAs(Yii::getPathOfAlias('webroot').'/images/fbpost/'.$model->image);//upload file
 					}
+					if ($model->referensi != '') {
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_HEADER, 0);
+						curl_setopt($ch, CURLOPT_URL, 'http://api.adf.ly/api.php?key=7efadeae65372322ee0205a4d9e2616a&uid=476307&advert_type=int&domain=go.waroeng.web.id&url='.urlencode($model->referensi));
+						curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , 0);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1);
+						$model->referensi_short = curl_exec($ch);
+						curl_close( $ch );
+					}
 					$model->date_input = date('Y-m-d H:i:s');
 					$model->date_modif = date('Y-m-d H:i:s');
 					$model->save();
+					if ($model->jenis == 1) {
+						// get access token
+						$access_token = Setting::model()->find('name = :name', array(':name'=>'access_token'))->value;
+
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_POST, 1);
+						curl_setopt($ch, CURLOPT_HEADER, 0);
+						$data = array();
+						$data['message'] = '['.$model->category.'] '.$model->text;
+						if ($model->referensi_short != '') {
+							$data['message'] = $data['message']."
+
+							Referensi Dari: ".$model->referensi_short;
+						}
+						$data['access_token'] = $access_token;
+						if ($model->link == '' AND $model->image == '') {
+							curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/428996930545102/feed');
+						}elseif($model->link != ''){
+							$data['link'] = $model->link;
+							curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/428996930545102/links');
+						}else{
+							$data['source'] = '@'.Yii::getPathOfAlias('webroot').'/images/fbpost/'.$model->image;
+							curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/428996930545102/photos');
+						}
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+						curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , 0);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1);
+						// eksekusi
+						$result = curl_exec($ch);
+						// echo curl_error($ch);
+						curl_close( $ch );
+						$model->result = $result;
+						$model->date_send = date('Y-m-d H:i:s');
+						$model->status = 1;
+						$model->save();
+					}
+					if ($model->jenis == 2) {
+						// get access token
+						$access_token = Setting::model()->find('name = :name', array(':name'=>'access_token'))->value;
+
+						$ch = curl_init();
+						curl_setopt($ch, CURLOPT_POST, 1);
+						curl_setopt($ch, CURLOPT_HEADER, 0);
+						$data = array();
+						$data['message'] = '['.$model->category.'] '.$model->text;
+						if ($model->referensi_short != '') {
+							$data['message'] = $data['message']."
+
+							Referensi Dari: ".$model->referensi_short;
+						}
+						$data['access_token'] = $access_token;
+
+						// get time last post
+						$criteria = new CDbCriteria;
+						$criteria->order = 'date_send DESC';
+						$dateSend = FbPost::model()->find($criteria)->date_send;
+						$dateSend = strtotime($dateSend);
+						if ($dateSend<time()) {
+							$dateSend = time();
+						}
+						$dateSend = $dateSend + $model->interval*60;
+						$data['published'] = false;
+						$data['scheduled_publish_time'] = $dateSend;
+						if ($model->link == '' AND $model->image == '') {
+							curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/428996930545102/feed');
+						}elseif($model->link != ''){
+							$data['link'] = $model->link;
+							curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/428996930545102/links');
+						}else{
+							$data['source'] = '@'.Yii::getPathOfAlias('webroot').'/images/fbpost/'.$model->image;
+							curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/428996930545102/photos');
+						}
+						curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+						curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , 0);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1);
+						// eksekusi
+						$result = curl_exec($ch);
+						// echo curl_error($ch);
+						curl_close( $ch );
+						$model->result = $result;
+						$model->date_send = date("Y-m-d H:i:s",$dateSend);
+						$model->status = 1;
+						$model->save();
+					}
 					Log::createLog("FbPostController Create $model->id");
 					Yii::app()->user->setFlash('success','Data has been inserted');
 				    $transaction->commit();
-					$this->redirect(array('update','id'=>$model->id));
+					$this->redirect(array('index'));
 				}
 				catch(Exception $ce)
 				{
@@ -128,7 +221,7 @@ class FbPostController extends Controller
 					Log::createLog("FbPostController Update $model->id");
 					Yii::app()->user->setFlash('success','Data Edited');
 				    $transaction->commit();
-					$this->redirect(array('update','id'=>$model->id));
+					$this->redirect(array('index'));
 				}
 				catch(Exception $ce)
 				{

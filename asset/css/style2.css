@@ -1,0 +1,98 @@
+.peta-indonesia{padding-top: 0px; padding-bottom: 30px; }
+.wrapper{padding-bottom: 30px;}
+.box-search-home-tujuan{float: left;}
+.box-search-home-submit{float: left;}
+.box-search-home-select select{
+width: 325px;
+
+height: 36px;
+background: transparent;
+border: none;
+-webkit-appearance: none;
+outline: none;
+}
+.box-search-home-select{width: 288px; height: 36px; float: left;margin-top: -5px;
+background: url(../images/search-kategory.png);
+padding: 5px 5px 5px 5px; overflow: hidden;}
+.peta-indonesia{background: url(../images/peta_indonesia_libur.png) no-repeat; height: 362px;
+width: 991px; }
+.peta-indonesia-hover{background: no-repeat; height: 362px;
+width: 991px;}
+
+.box-text-search{width: 608px; height: 46px; float: left; 
+background: url(../images/t-back-search.png);}
+.box-text-search .inner-field{width: 588px; height: 20px; margin: 13px 10px;}
+.box-text-search .inner-field input[type=text]{width: 588px;height: 20px; background: none; 
+border: none; outline: none;-webkit-appearance: none;}
+
+.box-select-search{width: 298px; height: 46px; float: left; 
+background: url(../images/search-kategory.png);}
+.box-select-search .inner-field{width: 278px; height: 20px; margin: 13px 10px; overflow: hidden;}
+.box-select-search .inner-field select{width: 308px;height: 20px; background: none; 
+border: none; outline: none;-webkit-appearance: none;}
+
+.box-submit-search{width: 103px; height: 46px; float: left; 
+background: url(../images/bt_cari.png);}
+.box-submit-search .inner-field{width: 83px; height: 20px; margin: 13px 10px;}
+.box-submit-search .inner-field input[type=submit]{width: 83px;height: 20px; background: none; 
+border: none; outline: none;-webkit-appearance: none;}
+
+
+
+
+.box-text-register{width: 297px; height: 45px; 
+background: url(../images/t-back-register.png);}
+.box-text-register .inner-field{width: 277px; height: 20px; margin: 13px 10px 12px; float: left;}
+.box-text-register .inner-field input[type=text], .box-text-register .inner-field input[type=password]{width: 277px;height: 20px; background: none; 
+border: none; outline: none;-webkit-appearance: none;}
+.error .box-text-register{background: url(../images/t-back-register-error.png);}
+.error-message{display: none;}
+.error .error-message{display: block; margin: 10px 0px 2px; padding: .2em;}
+
+.box-submit-register{width: 73px; height: 27px; float: left; 
+background: url(../images/back-icon-submit.png);}
+.box-submit-register .inner-field{width: 73px; height: 20px; margin: 4px 0px 3px; }
+.box-submit-register .inner-field input[type=submit]{width: 73px; height: 20px; background: none; 
+border: none; outline: none;-webkit-appearance: none; color: #fff;}
+
+
+
+
+
+.box-text-member{width: 297px; height: 45px; float: left;
+background: url(../images/t-back-register.png);}
+.box-text-member .inner-field{width: 277px; height: 20px; margin: 13px 10px 12px; float: left;}
+.box-text-member .inner-field input[type=text], .box-text-member .inner-field input[type=password]{width: 277px;height: 20px; background: none; 
+border: none; outline: none;-webkit-appearance: none;}
+
+.box-area-member{width: 257px; height: 134px; float: left;
+background: url(../images/t-area-large.png);}
+.box-area-member .inner-field{width: 237px; height: 114px; margin: 13px 10px 12px; float: left;}
+.box-area-member .inner-field textarea{width: 237px;height: 114px; background: none; 
+border: none; outline: none;-webkit-appearance: none;max-height: 114px; max-width: 237px;}
+
+.box-text-member .inner-field select{width: 277px;height: 20px; background: none; 
+border: none; outline: none;-webkit-appearance: none;}
+
+.error .box-text-member{background: url(../images/t-back-register-error.png);}
+.error-message{display: none;}
+.error .error-message{display: block; margin: 10px 0px 2px 10px; padding: .2em; float: left;}
+
+.box-submit-member{width: 73px; height: 27px; float: left; 
+background: url(../images/back-icon-submit.png);}
+.box-submit-member .inner-field{width: 73px; height: 20px; margin: 4px 0px 3px; }
+.box-submit-member .inner-field input[type=submit]{width: 73px; height: 20px; background: none; 
+border: none; outline: none;-webkit-appearance: none; color: #fff;}
+
+.box-label{height: 45px; width: 150px; float: left; line-height: 45px; font-weight: bold;}
+.box-label span.required{color: red;}
+.row-form{margin-bottom: 10px;}
+
+/* select */
+.box-select-member{width: 297px; height: 45px; float: left;
+background: url(../images/t-back-register.png);}
+.box-select-member .inner-field{width: 277px; height: 20px; margin: 13px 10px 12px; float: left;}
+.box-select-member .inner-field select{width: 277px;height: 20px; background: none; 
+border: none; outline: none;}
+
+

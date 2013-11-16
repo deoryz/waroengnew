@@ -22,10 +22,10 @@ $this->menu=array(
 			'type'=>'raw',
 			'value'=>'substr($data->text,0,100)',
 		),
-		'link',
-		'image',
+		// 'link',
+		// 'image',
 		'date_send',
-		'interval',
+		'result',
 		/*
 		'date_input',
 		'date_modif',

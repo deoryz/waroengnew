@@ -37,6 +37,8 @@
 
 	<?php echo $form->textFieldRow($model,'link',array('class'=>'span5','maxlength'=>200)); ?>
 
+	<?php echo $form->textFieldRow($model,'referensi',array('class'=>'span5','maxlength'=>300)); ?>
+
 	<?php if ($model->scenario == 'update' AND $model->image != ''): ?>
 	<div class="control-group">
 		<label class="control-label">&nbsp;</label>
@@ -48,16 +50,35 @@
 	<?php echo $form->fileFieldRow($model,'image'); ?>
 
 	<?php echo $form->dropDownListRow($model,'jenis',array(
+		'2'=>'Send But Delay',
 		'0'=>'Interval',
 		'1'=>'Kirim Sekarang',
 	),array('maxlength'=>200)); ?>
-
+	<?php
+	// SELECT SUM(`interval`) as `interval`  FROM `fb_post` WHERE `status` = 0
+	$query = Yii::app()->db->createCommand("
+	SELECT SUM(`interval`) as `interval`  FROM `fb_post` WHERE `status` = 0
+	")->queryRow();
+	$menit = $query['interval'];
+	?>
 	<?php echo $form->dropDownListRow($model,'interval',array(
+		'10'=>'10 Menit',
 		'15'=>'15 Menit',
+		'20'=>'20 Menit',
 		'30'=>'30 Menit',
 		'45'=>'45 Menit',
 		'60'=>'1 Jam',
-	),array('maxlength'=>200)); ?>
+		'5'=>'5 Menit',
+		'120'=>'2 Jam',
+		'180'=>'3 Jam',
+		'240'=>'4 Jam',
+		'300'=>'5 Jam',
+		'360'=>'6 Jam',
+		'420'=>'7 Jam',
+		'480'=>'8 Jam',
+		'540'=>'9 Jam',
+		'600'=>'10 Jam',
+	),array('maxlength'=>200, 'hint'=>'setelah '.$menit.' menit baru di proses')); ?>
 
 
 	<div class="form-actions">

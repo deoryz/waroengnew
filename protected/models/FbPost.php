@@ -46,8 +46,8 @@ class FbPost extends CActiveRecord
 			array('text, jenis', 'required'),
 			array('interval, jenis', 'numerical', 'integerOnly'=>true),
 			array('category, link, image', 'length', 'max'=>200),
-			array('link', 'url'),
-			array('category, text, link, image, date_input, jenis, date_send', 'safe'),
+			array('link, referensi, referensi_short', 'url'),
+			array('category, text, link, image, date_input, jenis, date_send, referensi, referensi_short', 'safe'),
 
 			array('image', 'file', 'types'=>'jpg, gif, png', 'allowEmpty'=>TRUE, 'on'=>'insert'),
 			array('image', 'file', 'types'=>'jpg, gif, png', 'allowEmpty'=>TRUE, 'on'=>'update'),
@@ -108,12 +108,13 @@ class FbPost extends CActiveRecord
 		$criteria->compare('date_send',$this->date_send,true);
 		$criteria->compare('interval',$this->interval);
 		$criteria->compare('jenis',$this->jenis);
+		$criteria->order = 'date_modif DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			// 'pageSize'=>array(
-				// 'limit'=>25,
-			// )
+			'pagination'=>array(
+				'pageSize'=>25,
+			)
 		));
 	}
 }

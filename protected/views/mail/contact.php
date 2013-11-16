@@ -41,11 +41,6 @@ $url = Yii::app()->request->hostInfo;
 		<td><?php echo $model->email; ?></td>
 	</tr>
 	<tr>
-		<td>How do you find us</td>
-		<td>:</td>
-		<td><?php echo $model->how; ?></td>
-	</tr>
-	<tr>
 		<td>Message</td>
 		<td>:</td>
 		<td><?php echo $model->body; ?>

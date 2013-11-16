@@ -32,7 +32,7 @@
 ));
 
 ?>
-<div style="height: 55px;"></div>
+<!-- <div style="height: 55px;"></div> -->
 <div class="container" id="page">
 
 	<?php if(isset($this->breadcrumbs)):?>

@@ -1,0 +1,26 @@
+.icon-view{
+	background: url(../images/icon-view.png);
+	margin-top: -2px;
+	width: 16px;
+	height: 17px;
+	line-height: 17px;
+}
+.icon-fdown{
+	background: url(../images/icon/icon-d-fast.png);
+	margin-top: -2px;
+	width: 14px;
+	height: 16px;
+	line-height: 17px;
+}
+.ic-view{
+    float: left;
+    width: 194px;
+    height: 19px;
+}
+.ic-ftdown{
+    float: left;
+    margin-left: 63px;
+    width: 154px;
+    height: 19px;
+}
+
