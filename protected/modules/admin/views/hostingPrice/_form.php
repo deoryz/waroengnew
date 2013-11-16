@@ -1,9 +1,9 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'id'=>'member-form',
+	'id'=>'hosting-price-form',
     'type'=>'horizontal',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
 	'clientOptions'=>array(
-		'validateOnSubmit'=>false,
+		'validateOnSubmit'=>true,
 	),
 )); ?>
 
@@ -18,22 +18,13 @@
 	
 	<?php endif; ?>
 
-	<?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>200)); ?>
+	<?php echo $form->textFieldRow($model,'hosting_id',array('class'=>'span5')); ?>
 
-	<?php echo $form->passwordFieldRow($model,'pass',array('class'=>'span5','maxlength'=>50)); ?>
+	<?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>100)); ?>
 
-	<?php echo $form->textFieldRow($model,'nama',array('class'=>'span5','maxlength'=>100)); ?>
+	<?php echo $form->textFieldRow($model,'periode',array('class'=>'span5')); ?>
 
-	<?php echo $form->textAreaRow($model,'alamat',array('class'=>'span5','row'=>3)); ?>
-
-	<?php echo $form->textFieldRow($model,'kota',array('class'=>'span5','maxlength'=>50)); ?>
-
-	<?php echo $form->textFieldRow($model,'no_telp',array('class'=>'span5','maxlength'=>20)); ?>
-
-	<?php echo $form->dropDownListRow($model,'status',array(
-		'1'=>'Aktif',
-		'0'=>'Tidak Aktif',
-	)); ?>
+	<?php echo $form->textFieldRow($model,'price',array('class'=>'span5')); ?>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

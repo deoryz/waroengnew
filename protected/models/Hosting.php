@@ -1,24 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "member".
+ * This is the model class for table "hosting".
  *
- * The followings are the available columns in table 'member':
+ * The followings are the available columns in table 'hosting':
  * @property integer $id
- * @property string $email
- * @property string $pass
- * @property string $nama
- * @property string $alamat
- * @property string $kota
- * @property string $no_telp
+ * @property string $group
+ * @property string $paket_name
+ * @property string $name
  * @property integer $status
  */
-class Member extends CActiveRecord
+class Hosting extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Member the static model class
+	 * @return Hosting the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +27,7 @@ class Member extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'member';
+		return 'hosting';
 	}
 
 	/**
@@ -41,18 +38,13 @@ class Member extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email, nama, alamat, kota, status', 'required'),
-			array('pass', 'required', 'on'=>'insert'),
-
+			array('group, paket_name, name, status', 'required'),
 			array('status', 'numerical', 'integerOnly'=>true),
-			array('email, alamat', 'length', 'max'=>200),
-			array('email', 'email'),
-			array('pass, kota', 'length', 'max'=>50),
-			array('nama', 'length', 'max'=>100),
-			array('no_telp', 'length', 'max'=>20),
+			array('group, name', 'length', 'max'=>100),
+			array('paket_name', 'length', 'max'=>200),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, email, pass, nama, alamat, kota, no_telp, status', 'safe', 'on'=>'search'),
+			array('id, group, paket_name, name, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,12 +66,9 @@ class Member extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'email' => 'Email',
-			'pass' => 'Pass',
-			'nama' => 'Nama',
-			'alamat' => 'Alamat',
-			'kota' => 'Kota',
-			'no_telp' => 'No Telp',
+			'group' => 'Group',
+			'paket_name' => 'Paket Name',
+			'name' => 'Name',
 			'status' => 'Status',
 		);
 	}
@@ -96,12 +85,9 @@ class Member extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('pass',$this->pass,true);
-		$criteria->compare('nama',$this->nama,true);
-		$criteria->compare('alamat',$this->alamat,true);
-		$criteria->compare('kota',$this->kota,true);
-		$criteria->compare('no_telp',$this->no_telp,true);
+		$criteria->compare('group',$this->group,true);
+		$criteria->compare('paket_name',$this->paket_name,true);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(

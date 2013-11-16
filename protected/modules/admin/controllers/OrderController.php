@@ -1,6 +1,6 @@
 <?php
 
-class MemberController extends Controller
+class OrderController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -44,22 +44,44 @@ class MemberController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Member;
+		$model=new Order;
+
+		$modelHosting=new OrderHosting;
+		$modelDomain=new OrderDomain;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Member']))
+		if(isset($_POST['Order']))
 		{
-			$model->attributes=$_POST['Member'];
+			$model->attributes=$_POST['Order'];
 			if($model->validate()){
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
-					$model->pass = sha1($model->pass);
-					$model->save();
+					if ($model->jenis_produk=='Hosting') {
 
-					Log::createLog("MemberController Create $model->id");
+						$modelHosting->attributes=$_POST['OrderHosting'];
+						$modelHosting->save();
+
+						$dataHosting = Hosting::model()->findByPk($modelHosting->hosting_id);
+
+						$model->total = $dataHosting->price;
+						$model->biller_type = 'hosting';
+						$model->biller_id = $modelHosting->id;
+					}else{
+						$modelDomain->attributes=$_POST['OrderDomain'];
+						$modelDomain->save();
+
+						$dataDomain = Domain::model()->findByPk($modelDomain->domain_id);
+
+						$model->total = $dataDomain->price;
+						$model->biller_type = 'domain';
+						$model->biller_id = $modelDomain->id;
+					}
+					$model->update = date('Y-m-d H:i:s');
+					$model->save();
+					Log::createLog("OrderController Create $model->id");
 					Yii::app()->user->setFlash('success','Data has been inserted');
 				    $transaction->commit();
 					$this->redirect(array('update','id'=>$model->id));
@@ -73,6 +95,8 @@ class MemberController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+			'modelHosting'=>$modelHosting,
+			'modelDomain'=>$modelDomain,
 		));
 	}
 
@@ -88,22 +112,15 @@ class MemberController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Member']))
+		if(isset($_POST['Order']))
 		{
-			$pass = $model->pass;
-			$model->attributes=$_POST['Member'];
+			$model->attributes=$_POST['Order'];
 			if($model->validate()){
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
-					
-					if ($model->pass != '') {
-						$model->pass = sha1($model->pass);
-					}else{
-						$model->pass = $pass;
-					}
 					$model->save();
-					Log::createLog("MemberController Update $model->id");
+					Log::createLog("OrderController Update $model->id");
 					Yii::app()->user->setFlash('success','Data Edited');
 				    $transaction->commit();
 					$this->redirect(array('update','id'=>$model->id));
@@ -114,9 +131,7 @@ class MemberController extends Controller
 				}
 			}
 		}
-		
-		$model->pass = '';
-		
+
 		$this->render('update',array(
 			'model'=>$model,
 		));
@@ -147,12 +162,12 @@ class MemberController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model=new Member('search');
+		$model=new Order('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Member']))
-			$model->attributes=$_GET['Member'];
+		if(isset($_GET['Order']))
+			$model->attributes=$_GET['Order'];
 
-		$dataProvider=new CActiveDataProvider('Member');
+		$dataProvider=new CActiveDataProvider('Order');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 			'model'=>$model,
@@ -166,7 +181,7 @@ class MemberController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Member::model()->findByPk($id);
+		$model=Order::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -178,7 +193,7 @@ class MemberController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='member-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='order-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

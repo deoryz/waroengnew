@@ -1,24 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "member".
+ * This is the model class for table "order_domain".
  *
- * The followings are the available columns in table 'member':
- * @property integer $id
- * @property string $email
- * @property string $pass
- * @property string $nama
- * @property string $alamat
- * @property string $kota
- * @property string $no_telp
- * @property integer $status
+ * The followings are the available columns in table 'order_domain':
+ * @property integer $di
+ * @property integer $domain_id
+ * @property string $domain
  */
-class Member extends CActiveRecord
+class OrderDomain extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Member the static model class
+	 * @return OrderDomain the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +25,7 @@ class Member extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'member';
+		return 'order_domain';
 	}
 
 	/**
@@ -41,18 +36,12 @@ class Member extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email, nama, alamat, kota, status', 'required'),
-			array('pass', 'required', 'on'=>'insert'),
-
-			array('status', 'numerical', 'integerOnly'=>true),
-			array('email, alamat', 'length', 'max'=>200),
-			array('email', 'email'),
-			array('pass, kota', 'length', 'max'=>50),
-			array('nama', 'length', 'max'=>100),
-			array('no_telp', 'length', 'max'=>20),
+			array('domain_id, domain', 'required'),
+			array('domain_id', 'numerical', 'integerOnly'=>true),
+			array('domain', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, email, pass, nama, alamat, kota, no_telp, status', 'safe', 'on'=>'search'),
+			array('di, domain_id, domain', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,14 +62,9 @@ class Member extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'email' => 'Email',
-			'pass' => 'Pass',
-			'nama' => 'Nama',
-			'alamat' => 'Alamat',
-			'kota' => 'Kota',
-			'no_telp' => 'No Telp',
-			'status' => 'Status',
+			'di' => 'Di',
+			'domain_id' => 'TLD',
+			'domain' => 'Domain',
 		);
 	}
 
@@ -95,14 +79,9 @@ class Member extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('pass',$this->pass,true);
-		$criteria->compare('nama',$this->nama,true);
-		$criteria->compare('alamat',$this->alamat,true);
-		$criteria->compare('kota',$this->kota,true);
-		$criteria->compare('no_telp',$this->no_telp,true);
-		$criteria->compare('status',$this->status);
+		$criteria->compare('di',$this->di);
+		$criteria->compare('domain_id',$this->domain_id);
+		$criteria->compare('domain',$this->domain,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

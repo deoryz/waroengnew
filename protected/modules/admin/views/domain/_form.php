@@ -1,5 +1,5 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'id'=>'member-form',
+	'id'=>'domain-form',
     'type'=>'horizontal',
 	'enableAjaxValidation'=>false,
 	'clientOptions'=>array(
@@ -18,21 +18,15 @@
 	
 	<?php endif; ?>
 
-	<?php echo $form->textFieldRow($model,'email',array('class'=>'span5','maxlength'=>200)); ?>
+	<?php echo $form->textFieldRow($model,'tld',array('class'=>'span5','maxlength'=>10)); ?>
 
-	<?php echo $form->passwordFieldRow($model,'pass',array('class'=>'span5','maxlength'=>50)); ?>
+	<?php echo $form->textFieldRow($model,'price',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'nama',array('class'=>'span5','maxlength'=>100)); ?>
+	<?php echo $form->textFieldRow($model,'mask',array('class'=>'span5')); ?>
 
-	<?php echo $form->textAreaRow($model,'alamat',array('class'=>'span5','row'=>3)); ?>
-
-	<?php echo $form->textFieldRow($model,'kota',array('class'=>'span5','maxlength'=>50)); ?>
-
-	<?php echo $form->textFieldRow($model,'no_telp',array('class'=>'span5','maxlength'=>20)); ?>
-
-	<?php echo $form->dropDownListRow($model,'status',array(
-		'1'=>'Aktif',
-		'0'=>'Tidak Aktif',
+	<?php echo $form->dropDownListRow($model,'jenis',array(
+		'int'=>'International',
+		'id'=>'Indonesia',
 	)); ?>
 
 	<div class="form-actions">

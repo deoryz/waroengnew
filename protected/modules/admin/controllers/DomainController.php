@@ -1,6 +1,6 @@
 <?php
 
-class MemberController extends Controller
+class DomainController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -44,22 +44,20 @@ class MemberController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Member;
+		$model=new Domain;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Member']))
+		if(isset($_POST['Domain']))
 		{
-			$model->attributes=$_POST['Member'];
+			$model->attributes=$_POST['Domain'];
 			if($model->validate()){
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
-					$model->pass = sha1($model->pass);
 					$model->save();
-
-					Log::createLog("MemberController Create $model->id");
+					Log::createLog("DomainController Create $model->id");
 					Yii::app()->user->setFlash('success','Data has been inserted');
 				    $transaction->commit();
 					$this->redirect(array('update','id'=>$model->id));
@@ -88,22 +86,15 @@ class MemberController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Member']))
+		if(isset($_POST['Domain']))
 		{
-			$pass = $model->pass;
-			$model->attributes=$_POST['Member'];
+			$model->attributes=$_POST['Domain'];
 			if($model->validate()){
 				$transaction=$model->dbConnection->beginTransaction();
 				try
 				{
-					
-					if ($model->pass != '') {
-						$model->pass = sha1($model->pass);
-					}else{
-						$model->pass = $pass;
-					}
 					$model->save();
-					Log::createLog("MemberController Update $model->id");
+					Log::createLog("DomainController Update $model->id");
 					Yii::app()->user->setFlash('success','Data Edited');
 				    $transaction->commit();
 					$this->redirect(array('update','id'=>$model->id));
@@ -114,9 +105,7 @@ class MemberController extends Controller
 				}
 			}
 		}
-		
-		$model->pass = '';
-		
+
 		$this->render('update',array(
 			'model'=>$model,
 		));
@@ -147,12 +136,12 @@ class MemberController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model=new Member('search');
+		$model=new Domain('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Member']))
-			$model->attributes=$_GET['Member'];
+		if(isset($_GET['Domain']))
+			$model->attributes=$_GET['Domain'];
 
-		$dataProvider=new CActiveDataProvider('Member');
+		$dataProvider=new CActiveDataProvider('Domain');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 			'model'=>$model,
@@ -166,7 +155,7 @@ class MemberController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Member::model()->findByPk($id);
+		$model=Domain::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -178,7 +167,7 @@ class MemberController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='member-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='domain-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

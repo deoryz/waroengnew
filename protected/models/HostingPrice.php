@@ -1,24 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "member".
+ * This is the model class for table "hosting_price".
  *
- * The followings are the available columns in table 'member':
- * @property integer $id
- * @property string $email
- * @property string $pass
- * @property string $nama
- * @property string $alamat
- * @property string $kota
- * @property string $no_telp
- * @property integer $status
+ * The followings are the available columns in table 'hosting_price':
+ * @property integer $di
+ * @property integer $hosting_id
+ * @property string $name
+ * @property integer $periode
+ * @property integer $price
  */
-class Member extends CActiveRecord
+class HostingPrice extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Member the static model class
+	 * @return HostingPrice the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +27,7 @@ class Member extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'member';
+		return 'hosting_price';
 	}
 
 	/**
@@ -41,18 +38,12 @@ class Member extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email, nama, alamat, kota, status', 'required'),
-			array('pass', 'required', 'on'=>'insert'),
-
-			array('status', 'numerical', 'integerOnly'=>true),
-			array('email, alamat', 'length', 'max'=>200),
-			array('email', 'email'),
-			array('pass, kota', 'length', 'max'=>50),
-			array('nama', 'length', 'max'=>100),
-			array('no_telp', 'length', 'max'=>20),
+			array('hosting_id, name, periode, price', 'required'),
+			array('hosting_id, periode, price', 'numerical', 'integerOnly'=>true),
+			array('name', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, email, pass, nama, alamat, kota, no_telp, status', 'safe', 'on'=>'search'),
+			array('id, hosting_id, name, periode, price', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,13 +65,10 @@ class Member extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'email' => 'Email',
-			'pass' => 'Pass',
-			'nama' => 'Nama',
-			'alamat' => 'Alamat',
-			'kota' => 'Kota',
-			'no_telp' => 'No Telp',
-			'status' => 'Status',
+			'hosting_id' => 'Hosting',
+			'name' => 'Name',
+			'periode' => 'Periode',
+			'price' => 'Price',
 		);
 	}
 
@@ -96,13 +84,10 @@ class Member extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('pass',$this->pass,true);
-		$criteria->compare('nama',$this->nama,true);
-		$criteria->compare('alamat',$this->alamat,true);
-		$criteria->compare('kota',$this->kota,true);
-		$criteria->compare('no_telp',$this->no_telp,true);
-		$criteria->compare('status',$this->status);
+		$criteria->compare('hosting_id',$this->hosting_id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('periode',$this->periode);
+		$criteria->compare('price',$this->price);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
